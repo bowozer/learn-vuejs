@@ -4,6 +4,7 @@
   "description": "Just learning Vue.js",
   "main": "",
   "dependencies": {
+    "lodash": "^4.17.11",
     "vue": "^2.5.17"
   },
   "devDependencies": {},
