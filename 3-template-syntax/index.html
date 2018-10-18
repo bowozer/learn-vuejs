@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vue.js - Template Syntax</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="interpolation-app">
+        <p><span>Message: {{ msg }}</span></p>
+        <p><span v-once>Unchanged Message: {{ msg }}</span></p>
+        <p>Mustache power: <span>{{ rawHtml }}</span></p>
+        <p>v-html directive: <span v-html="rawHtml"></span></p>
+        <div v-bind:id="dynamicId()"></div>
+        <button v-bind:disabled="isButtonDisabled()">Click Me? Button is {{ isButtonDisabled ? 'disabled' : 'enabled'
+            }}</button>
+    </div>
+
+    <script>
+        var interpolationVM = new Vue({
+            el: '#interpolation-app',
+            data: {
+                msg: 'Ja, genau. bis spater. Gute Nacht',
+                rawHtml: '<span style="color: red">das ist rot</span>',
+                fooId: 10
+            },
+            methods: {
+                dynamicId: function () {
+                    return 'foo-' + this.fooId;
+                },
+
+                isButtonDisabled: function () {
+                    return this.dynamicId() == 'foo-5';
+                }
+            }
+        });
+    </script>
+
+    <div id="directive-app">
+        <a v-bind:href="fooLink.url">go to footown</a>
+        <a href="#" v-on:click="cliketyOnClick">clikety click</a>
+
+        <form v-on:submit.prevent="onSubmit">
+            <button type="submit">Go!</button>
+        </form>
+    </div>
+
+    <script>
+        var directiveVM = new Vue({
+            el: '#directive-app',
+            data: {
+                fooLink: {
+                    url: 'http://www.footown.co.id/'
+                }
+            },
+            methods: {
+                cliketyOnClick: function () {
+                    console.log(`Clikety link has been clicked.`);
+                },
+
+                onSubmit: function() {
+                    console.log('Form is submitted but not go to another page or even refresh');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

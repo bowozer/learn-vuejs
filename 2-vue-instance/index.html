@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vue.js - Vue Instance</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id='app-1'>
+        <span>Foo Value: {{ fooValue }} </span>
+    </div>
+
+    <div id="app-2">
+        <p>{{ fooText }}</p>
+        <button v-on:click="fooText = 'Junge'">Change It</button>
+    </div>
+
+    <div id="app-3">
+        <p>{{ he }}</p>
+    </div>
+
+    <script>
+        var data = {
+            fooValue: 1
+        };
+
+        var vm1 = new Vue({
+            el: '#app-1',
+            data: data
+        });
+
+        vm1.$watch('fooValue', function (newValue, oldValue) {
+            console.log('fooValue oldValue :', oldValue, 'fooValue newValue: ', newValue);
+        });
+
+        var freezeObj = {
+            fooText: 'bar'
+        };
+
+        Object.freeze(freezeObj);
+
+        var vm2 = new Vue({
+            el: '#app-2',
+            data: freezeObj
+        });
+
+        var vm3Data = {
+            he: 'er',
+            she: 'sie',
+            it: 'es',
+            you: 'du',
+            youAll: 'ihr',
+            we: 'wir'
+        };
+
+        var vm3 = new Vue({
+            el: '#app-3',
+            data: vm3Data,
+            created: function () {
+                console.log('Vue Model App 3 is created.', this.he);
+            },
+            mounted: function () {
+                console.log('Vue Model App 3 is mounted.', this.she);
+            },
+            updated: function () {
+                console.log('Vue Model App 3 is updated.', this.it);
+            },
+            destroyed: function () {
+                console.log('Vue Model App 3 is updated.', this.you);
+            }
+        });
+    </script>
+</body>
+
+</html>
