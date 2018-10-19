@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vue.js - Component Basics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .demo-alert-box {
+            padding: 10px 20px;
+            background: #f3beb8;
+            border: 1px solid #f09898;
+        }
+
+        .tab-button {
+            padding: 6px 10px;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+            background: #f0f0f0;
+            margin-bottom: -1px;
+            margin-right: -1px;
+        }
+
+        .tab-button:hover {
+            background: #e0e0e0;
+        }
+
+        .tab-button.active {
+            background: #e0e0e0;
+        }
+
+        .tab {
+            border: 1px solid #ccc;
+            padding: 10px;
+        }
+    </style>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+            <button-counter></button-counter>
+        </div>
+        <hr />
+        <div>
+            <alert-box>Lieder.. Es tut mir lied</alert-box>
+        </div>
+        <hr />
+        <div>
+            <custom-input v-model="searchText"></custom-input>
+        </div>
+        <hr />
+        <div :style="{fontSize: blogPostFontSize + 'em' }">
+            <blog-post v-for="post in blogPostList" :key="post.id" :post="post" v-on:enlarge-text="onEnlargeText"></blog-post>
+        </div>
+        <hr />
+        <div>
+            <button v-for="tab in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab }]" v-on:click="currentTab = tab">
+                {{ tab }}
+            </button>
+
+            <component :is="currentTabComponent" class="tab"> </component>
+        </div>
+    </div>
+
+    <script>
+        Vue.component('button-counter', {
+            data: function () {
+                return {
+                    count: 0
+                }
+            },
+            template: '\
+                <button v-on:click="count++">You clicked me {{ count }} times</button>\
+            '
+        });
+
+        Vue.component('blog-post', {
+            props: ['post'],
+            template: '\
+                <div class="blog-post">\
+                    <h3>{{ post.title }}</h3>\
+                    <button v-on:click="$emit(\'enlarge-text\', 0.1)">Enlarge text</button>\
+                    <div v-html="post.content"></div>\
+                </div>\
+            '
+        });
+
+        Vue.component('custom-input', {
+            props: ['value'],
+            template: '\
+                <input v-bind:value="value" v-on:input="$emit(\'input\', $event.target.value)" placeholder="Search keywords...."/>\
+            '
+        });
+
+        Vue.component('alert-box', {
+            template: '\
+                <div class="demo-alert-box">\
+                    <strong>Error!</strong>\
+                    <slot></slot>\
+                </div>\
+            '
+        });
+
+        Vue.component('tab-ich', {
+            template: '<div>\
+                    <p>Ich trinke Milch</p>\
+                    <p>Ich esse Brot</p>\
+                    <p>Ich lese Zeitung</p>\
+                </div>'
+        });
+
+        Vue.component('tab-du', {
+            template: '<div>\
+                    <p>Du trinkst Milch</p>\
+                    <p>Du isst Brot</p>\
+                    <p>Du leist Zeitung</p>\
+                </div>'
+        });
+
+        Vue.component('tab-ersiees', {
+            template: '<div>\
+                    <p>Der Man trinkt Milch</p>\
+                    <p>Die Frau isst Brot</p>\
+                    <p>Es leist Zeitung</p>\
+                </div>'
+        });
+
+        Vue.component('tab-wir', {
+            template: '<div>\
+                    <p>Wir trinken Milch</p>\
+                    <p>Wir essen Brot</p>\
+                    <p>Wir lesen Zeitung</p>\
+                </div>'
+        });
+
+        Vue.component('tab-ihr', {
+            template: '<div>\
+                    <p>Ihr trinkt Milch</p>\
+                    <p>Ihr esst Brot</p>\
+                    <p>Ihr lest Zeitung</p>\
+                </div>'
+        });
+
+        Vue.component('tab-sie', {
+            template: '<div>\
+                    <p>Die Mädchen trinken Milch</p>\
+                    <p>Die Jungen essen Brot</p>\
+                    <p>Sie lesen Zeitung</p>\
+                </div>'
+        });
+
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                searchText: '',
+                blogPostList: [{
+                        id: 1,
+                        title: 'Mir Brot ist Mir Brot',
+                        content: '<p><i>Ich esse Brot.</i></p>'
+                    },
+                    {
+                        id: 2,
+                        title: 'Das Milch und ich',
+                        content: '<p><b>Du trinkst Wasser, ich trinke Milch.</b></p>'
+                    },
+                    {
+                        id: 3,
+                        title: 'Gern geschehen und bis bald',
+                        content: '<p>Danke Schöen, Sandra. Ja, Gern geschehen und auf wiedersehen</p>'
+                    }
+                ],
+                blogPostFontSize: 1,
+                currentTab: 'Ich',
+                tabs: ['Ich', 'Du', 'ErSieEs', 'Wir', 'Ihr', 'Sie']
+            },
+            computed: {
+                currentTabComponent: function () {
+                    return 'tab-' + this.currentTab.toLowerCase();
+                }
+            },
+            methods: {
+                onEnlargeText: function (amount) {
+                    this.blogPostFontSize += amount;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vue.js - Form Input Bindings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div>
+            <p><input v-model.lazy='textMessage' type="text" placeholder="Input Text" /> </p>
+
+            <p>Message is: {{ textMessage }}</p>
+        </div>
+        <div>
+            <p><textarea v-model="multilineMessage" placeholder="Multiline Text"></textarea></p>
+            <p style="white-space: pre-line;">Multiline Message is:
+                {{ multilineMessage }}
+            </p>
+        </div>
+        <div>
+            <p>
+                <input v-model="checked" id="chkbox" type="checkbox" />
+                <label for="chkbox">{{ checked }}</label>
+            </p>
+        </div>
+        <div>
+            <p>
+                <input v-model="checkedPerson" id="essen" type="checkbox" value="Wir essen Brot. Sie essen Brot." />
+                <label for="essen">essen</label>
+                <input v-model="checkedPerson" id="esst" type="checkbox" value="Ihr esst Brot." />
+                <label for="esst">esst</label>
+                <input v-model="checkedPerson" id="esse" type="checkbox" value="Ich esse Brot." />
+                <label for="esse">esse</label>
+                <input v-model="checkedPerson" id="isst" type="checkbox" value="Du isst Brot und Das Junge isst Brot; " />
+                <label for="isst">isst</label>
+            </p>
+            <p>Checked example: {{ checkedPerson }}</p>
+        </div>
+        <div>
+            <p>
+                <input v-model="pickedTrinken" id="trinken" type="radio" value="Wir trinken Wasser. Sie trinken Milch." />
+                <label for="trinken">Trinken</label>
+                <input v-model="pickedTrinken" id="trinke" type="radio" value="Ich trinke Wasser." />
+                <label for="trinke">Trinke</label>
+                <input v-model="pickedTrinken" id="trinkt" type="radio" value="Ihr trinkt Wasser. Der Mann trinkt Milch." />
+                <label for="trinkt">Trinkt</label>
+                <input v-model="pickedTrinken" id="trinkst" type="radio" value="Du trinkst Wasser." />
+                <label for="trinkst">Trinkst</label>
+            </p>
+            <p>Picked: {{ pickedTrinken }}</p>
+        </div>
+        <div>
+            <p>
+                <select v-model="selectedLesen">
+                    <option disabled value="">Please select one</option>
+                    <option value="lesen">Wir lesen Zeitung. Sie lesen Zeitung.</option>
+                    <option value="lese">Ich lese Zeitung</option>
+                    <option value="liest">Du liest Zeitung. Sie liest Zeitung.</option>
+                    <option value="lest">Ihr lest Zeitung.</option>
+                </select>
+            </p>
+            <p>Selected: {{ selectedLesen }}</p>
+        </div>
+        <div>
+            <p>
+                <select v-model="multipleSelectedLesen" multiple>
+                    <option disabled value="">Please select one</option>
+                    <option value="lesen">Wir lesen Zeitung. Sie lesen Zeitung.</option>
+                    <option value="lese">Ich lese Zeitung</option>
+                    <option value="liest">Du liest Zeitung. Sie liest Zeitung.</option>
+                    <option value="lest">Ihr lest Zeitung.</option>
+                </select>
+            </p>
+            <p>Selected: {{ multipleSelectedLesen }}</p>
+        </div>
+
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                textMessage: '',
+                multilineMessage: '',
+                checked: false,
+                checkedPerson: [],
+                pickedTrinken: '',
+                selectedLesen: '',
+                multipleSelectedLesen: []
+            }
+        });
+    </script>
+</body>
+
+</html>

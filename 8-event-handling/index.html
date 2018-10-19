@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vue.js - Event Handling</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="button-click-counters">
+        <button v-on:click="counter += 1">Click me!</button>
+        <p>Das button has been clicked {{ counter }} times.</p>
+    </div>
+
+    <script>
+        const buttonClickCounterVM = new Vue({
+            el: '#button-click-counters',
+            data: {
+                counter: 0
+            }
+        });
+    </script>
+
+    <hr />
+
+    <div id="greeter">
+        <p>
+            <label for="greetee-name">Name</label>
+            <input v-model="name" id="greetee-name" type="text" placeholder="Set your name here" v-on:keyup.esc="onEscapeGreeteeName($event)" />
+        </p>
+        <p>
+            <button v-on:click="greet">Greet</button>
+            <button v-on:click.once="greet($event, 'Wie geht\'s?')">Ask how it is going</button>
+        </p>
+    </div>
+
+    <script>
+        const greeterVM = new Vue({
+            el: '#greeter',
+            data: {
+                name: ''
+            },
+            methods: {
+                greet: function (event, additionalMsg = '') {
+                    if (!this.name) {
+                        console.error('Name must be provided');
+                        return;
+                    }
+
+                    var greetMessage = `Hallo ${this.name}! ${additionalMsg}`;
+                    if (event) {
+                        greetMessage += '\nInvoked by ' + event.target.tagName;
+                    }
+                    alert(greetMessage);
+                },
+                onEscapeGreeteeName: function (event) {
+                    this.name = '';
+                    event.target.blur();
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
