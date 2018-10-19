@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Vue.js - Conditional Rendering</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../node_modules/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1 v-if="ok">YES</h1>
+
+        <h1 v-else>NO</h1>
+        <h2 v-show="ok">Alles Klar!</h2>
+        <template v-if="ok">
+            <h3>Ja</h3>
+            <p>Er trinkt Milch und isst Brot</p>
+        </template>
+        <template v-else-if="!ok && sorry">
+            <h3>Entschuldigung</h3>
+            <p>Wir trinken Milch und essen Brot und lesen Zeitung</p>
+        </template>
+        <template v-else>
+            <h3>Nein</h3>
+            <p>Er trinkt Wasser und liest Zeitung</p>
+        </template>
+        <button @click="ok = !ok">{{ ok ? 'Nein' : 'Ja' }}</button>
+        <hr />
+        <div>
+            <template v-if="loginType === 'username'">
+                <label for="login-id">Username</label>
+                <input id="login-id" placeholder="Enter your username" key="username-input" />
+            </template>
+            <template v-else>
+                <label for="login-id">Email</label>
+                <input id="login-id" placeholder="Enter your email address" key="email-input" />
+            </template>
+        </div>
+        <div>
+            <button @click="toggleLoginType">Toggle login type</button>
+        </div>
+    </div>
+    <script>
+        const vm = new Vue({
+            el: '#app',
+            data: {
+                ok: true,
+                sorry: false,
+                loginType: 'username'
+            },
+            methods: {
+                toggleLoginType: function () {
+                    this.loginType = this.loginType === 'username' ? 'email' : 'username';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
